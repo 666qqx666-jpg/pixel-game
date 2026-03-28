@@ -1,0 +1,34 @@
+# 依赖
+node_modules/
+
+# 构建产物
+dist/
+
+# 环境变量（含 GAS URL 等，勿提交公开仓库）
+.env
+.env.*
+!.env.example
+
+# Vite
+.vite/
+
+# TypeScript
+*.tsbuildinfo
+
+# 日志与调试
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 系统与编辑器
+.DS_Store
+Thumbs.db
+.idea/
+*.swp
+*.swo
+*~
+
+# 测试覆盖率等（若以后添加）
+coverage/
+.nyc_output/
