@@ -43,7 +43,7 @@ export default defineConfig(({ mode }) => {
       process.env.VITE_BASE_PATH ??
       fileEnv.BASE_PATH ??
       fileEnv.VITE_BASE_PATH ??
-      '',
+      'pixel-game',
   )
 
   return {
