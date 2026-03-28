@@ -1,0 +1,48 @@
+# 将 npm run build 的 dist/ 部署到 GitHub Pages（不要用 main 分支根目录的源码当网站）
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - name: Build
+        env:
+          # 与仓库名一致，生成 /pixel-game/ 等资源前缀
+          BASE_PATH: ${{ github.event.repository.name }}
+          # 在仓库 Settings → Secrets and variables → Actions 新建 Repository secret
+          GOOGLE_APP_SCRIPT_URL: ${{ secrets.GOOGLE_APP_SCRIPT_URL }}
+          PASS_THRESHOLD: '3'
+          QUESTION_COUNT: '5'
+        run: npm run build
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

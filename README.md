@@ -47,6 +47,23 @@ npm run build
 
 构建结果在 `dist/`，可用任意静态服务器托管，也可用 `npm run preview` 本地预览。
 
+### GitHub Pages（避免白屏、JS 404）
+
+**不要**只开启 Pages 并指向 `main` 分支**根目录**：仓库根目录是源码，`index.html` 会请求 `/src/main.tsx`，线上没有 Vite，必然 404、白屏。
+
+推荐两种方式（二选一）：
+
+1. **GitHub Actions（本仓库已含工作流）**  
+   - 仓库 **Settings → Pages → Build and deployment → Source** 选 **GitHub Actions**。  
+   - **Settings → Secrets and variables → Actions** 新建 **Repository secret**：`GOOGLE_APP_SCRIPT_URL`（填你的 GAS `/exec` 地址）。  
+   - 推送 `main` 后会自动 `npm ci` → `npm run build`（`BASE_PATH` 自动等于**仓库名**）→ 部署 `dist/`。  
+   - 访问：`https://<用户名>.github.io/<仓库名>/`（例如 [pixel-game 仓库](https://github.com/666qqx666-jpg/pixel-game) 对应 `https://666qqx666-jpg.github.io/pixel-game/`）。
+
+2. **本地构建后手动上传**  
+   - `.env` 中设 `BASE_PATH=你的仓库名`，执行 `npm run build`，把 **`dist/` 内全部文件** 传到 `gh-pages` 分支**根目录**（或任意静态托管的根目录）。
+
+`index.js` / `content_script.js` / Chrome Built-In AI 等多为**浏览器扩展**日志，与项目无关，可忽略。
+
 ---
 
 ## Google 表格：创建与结构
