@@ -199,3 +199,4 @@ pixel-game/
 - [Google Apps Script Web 应用简介](https://developers.google.com/apps-script/guides/web)
 - [Vite 环境变量与模式](https://vitejs.dev/guide/env-and-mode.html)
 - [DiceBear API](https://www.dicebear.com/how-to-use/http-api/)
+# pixel-game
